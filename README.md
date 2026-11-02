@@ -11,6 +11,7 @@ Teks, warna, dan gambar diambil dari amalqu.com.
 | Backend papan donasi | `api/donations.ts` | Edge Function `GET`/`POST` yang menyimpan donatur di Vercel KV |
 | Sinkronisasi klien | `src/store/donations.tsx` | `remote`, `remoteNotice`, `publishDonation()`, merge entri server + lokal (dedupe per ID invoice) |
 | Status koneksi | `src/components/DonationWall.tsx` | Menampilkan pemberitahuan bila KV belum aktif |
+| Penanda varian | `src/components/Layout.tsx` | Chip "Varian A · papan donasi server KV / mode lokal" di ribbon dan cap di footer — mengikuti status sumber data yang sebenarnya, sehingga deployment Varian A langsung bisa dibedakan |
 | Routing | `vercel.json` | Rewrite SPA `"/((?!api/).*)"` agar `/api/donations` tidak tertutup |
 
 Tanpa konfigurasi KV, aplikasi **tetap jalan penuh** dalam mode lokal dan menampilkan *"Mode lokal — Vercel KV belum dikonfigurasi…"* di papan donasi. Tidak ada error yang menghalangi pengguna.

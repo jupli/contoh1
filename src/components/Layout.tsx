@@ -8,7 +8,7 @@ import { SourceImage } from './SourceImage';
 import { IMAGES } from '../data';
 
 export function LiveRibbon() {
-  const { entries, totals } = useDonations();
+  const { entries, totals, remoteNotice } = useDonations();
   const [index, setIndex] = useState(0);
   useEffect(() => {
     if (entries.length < 2 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -21,6 +21,10 @@ export function LiveRibbon() {
     <div className="ribbon">
       <div className="shell-width flex flex-wrap items-center justify-center gap-x-3 gap-y-1 py-2 font-body text-[10.5px] text-white/85">
         <span className="inline-flex items-center gap-1.5 rounded-full bg-white/12 px-2.5 py-1 text-[9px] font-bold uppercase tracking-[0.14em]"><span className="live-dot" />Langsung</span>
+        <span className="variant-chip" title={remoteNotice ? 'Vercel KV belum aktif — donasi hanya tercatat di perangkat ini' : 'Donasi tersimpan di Vercel KV dan tampil untuk semua pengunjung'}>
+          <span className={`variant-dot ${remoteNotice ? 'variant-dot-local' : 'variant-dot-live'}`} />
+          Varian A · papan donasi {remoteNotice ? 'mode lokal' : 'server KV'}
+        </span>
         <span key={entry.id} className="ribbon-line flex min-w-0 items-center gap-1.5">
           <Quote size={11} className="shrink-0 text-[#ffd9a8]" />
           <span className="truncate"><b className="text-white">{entry.name}</b> · {relativeTime(entry.createdAt)} · <b className="text-[#ffd9a8]">Rp {formatRupiah(entry.amount)}</b></span>
@@ -159,6 +163,7 @@ export function SiteLayout() {
 }
 
 export function SiteFooter() {
+  const { remoteNotice } = useDonations();
   return (
     <footer id="kontak-footer" className="site-footer">
       <div className="shell-width grid gap-9 px-5 sm:grid-cols-2 lg:grid-cols-[1.1fr_1fr_1fr_.9fr]">
@@ -193,7 +198,11 @@ export function SiteFooter() {
         </section>
       </div>
       <div className="shell-width mt-10 border-t border-black/5 px-5 pt-5 text-center font-body text-[11px] text-muted">
-        © {new Date().getFullYear()} {PROGRAM.org} · {PROGRAM.name}
+        <p>© {new Date().getFullYear()} {PROGRAM.org} · {PROGRAM.name}</p>
+        <p className="variant-stamp mt-2.5">
+          <span className={`variant-dot ${remoteNotice ? 'variant-dot-local' : 'variant-dot-live'}`} />
+          Varian A — papan donasi bersama via Vercel KV · sumber data: <b className="text-ink">{remoteNotice ? 'perangkat ini (mode lokal)' : 'server'}</b>
+        </p>
       </div>
     </footer>
   );
