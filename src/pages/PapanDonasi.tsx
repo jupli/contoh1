@@ -5,6 +5,7 @@ import { usePageMeta } from '../utils/page';
 import { DonationWall } from '../components/DonationWall';
 import { Gallery } from '../components/Gallery';
 import { PageHero } from '../components/PageHero';
+import { ServerStatus } from '../components/ServerStatus';
 
 export default function PapanDonasi() {
   usePageMeta('Papan Donasi — Ribuan #SahabatAmal Sudah Berdonasi | AmalQu', 'Daftar donatur sedekah mushaf Al-Qur\'an beserta ucapan Jazakumullah Khairan Katsiran, bukti transfer, dan total yang tercatat.');
@@ -27,6 +28,10 @@ export default function PapanDonasi() {
       />
 
       <div className="mt-8">
+        <ServerStatus />
+      </div>
+
+      <div className="mt-6">
         <DonationWall />
       </div>
 
